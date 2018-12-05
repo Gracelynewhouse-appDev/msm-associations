@@ -40,6 +40,15 @@
 
     <textarea id="description" name="description" class="form-control" rows="3"><%= @movie.description %></textarea>
   </div>
+  
+  <div class="form-group">
+    <label for="director_id">
+      Director
+    </label>
+
+     <%= select_tag("director_id", options_from_collection_for_select(Director.all, :id, :name, @movie.try(:director_id)), :class => "form-control") %>
+     or <a href="/directors/new">Add a new director</a> first
+  </div>
 
   <!-- Label and input for image_url -->
   <div class="form-group">

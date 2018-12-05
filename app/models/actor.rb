@@ -12,4 +12,8 @@
 #
 
 class Actor < ApplicationRecord
+  validates :name, presence: true
+  validates :name, uniqueness: { scope: :dob,
+    message: "dob should be unique to name" }
+  has_many :characters, :class_name => "Character", :foreign_key => "actor_id"
 end

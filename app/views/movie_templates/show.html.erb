@@ -22,6 +22,16 @@
   <dd>
     <%= @movie.year %>
   </dd>
+  
+  <dt>
+    Director
+  </dt>
+  <dd>
+      <%= Director.find(@movie.director_id).name %>
+
+    </dd>
+    
+    
 
   <dt>
     Duration
@@ -45,6 +55,58 @@
   </dd>
 
 </dl>
+
+<div class="card mt-4">
+  <div class=  "card-header">
+    Cast
+  </div>
+  <ul class="list-grouplist-group-flush">
+    <% Character.where(movie_id: @movie.id).each  do |char|  %>
+      <li class="list-group-item">
+        <a href="/actors/<%= char.actor_id %>">
+          <%= Actor.find(char.actor_id).name %>
+        </a>
+      </li>
+      <% end %>
+  </ul>
+  <div class="card-header">
+    Add a new character for this movie
+  </div>
+  <ul  class="list-group">
+    <li class="list-group-item">
+      <form action="/create_character" method="post" >
+        
+  <!-- Label and input for name -->
+  <div class="form-group">
+    <label for="name">
+      Name
+    </label>
+
+    <input type="text" id="name" name="name" class="form-control">
+  </div>
+
+  <!-- Label and dropdown for actor -->
+  
+   <div class="form-group">
+    <label for="actor_id">
+      Actor
+    </label>
+
+     <%= select_tag("actor_id", options_from_collection_for_select(Actor.all, :id, :name, @character.try(:actor_id)), :class => "form-control") %>
+     or <a href="/actors/new">Add a new actor</a> first
+  </div>
+  
+  <!-- Label and input for director_id -->
+ <input type="hidden"  name="movie_id" value="<%= @movie.id %>">
+
+  <button class="btn btn-block btn-outline-secondary">
+    Create character
+  </button>
+</form>
+    </li>
+  </ul>
+  
+</div>
 
 <a href="/delete_movie/<%= @movie.id %>" class="btn btn-danger">
   Delete movie

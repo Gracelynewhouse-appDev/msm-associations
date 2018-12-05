@@ -22,9 +22,13 @@ class ActorsController < ApplicationController
     @actor.name = params.fetch("name")
     @actor.bio = params.fetch("bio")
     @actor.image_url = params.fetch("image_url")
-    @actor.save
-
-    redirect_to("/actors", :notice => "Actor created successfully.")
+    
+    if @actor.valid?
+      @actor.save
+      redirect_to("/actors", :notice => "Actor created successfully.")
+    else
+      render("actor_templates/new_form.html.erb")
+    end
   end
 
   def edit_form

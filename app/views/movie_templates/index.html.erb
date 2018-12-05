@@ -21,6 +21,10 @@
     <th>
       Year
     </th>
+    
+    <th>
+      Director
+    </th>
 
     <th>
       Duration
@@ -46,6 +50,11 @@
 
     <td>
       <%= movie.year %>
+    </td>
+    
+    <td>
+      <%= Director.find(movie.director_id).name %>
+
     </td>
 
     <td>
